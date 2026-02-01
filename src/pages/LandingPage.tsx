@@ -1,16 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '../components/Button';
-import './LandingPage.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../components/Button";
+import { SiteLayout } from "../components/SiteLayout/SiteLayout";
+import "./LandingPage.css";
 
 export const LandingPage: React.FC = () => {
   return (
-    <div className="landing-page">
+    <SiteLayout className="landing-page">
       <header className="landing-header">
         <div className="landing-header-content">
           <h1 className="landing-title">Stay Informed</h1>
           <p className="landing-subtitle">
-            Get the latest updates, insights, and exclusive content delivered straight to your inbox.
+            Get the latest updates, insights, and exclusive content delivered
+            straight to your inbox.
           </p>
           <div className="landing-cta">
             <Link to="/subscribe">
@@ -37,7 +39,9 @@ export const LandingPage: React.FC = () => {
           <div className="feature-card">
             <div className="feature-icon">🔔</div>
             <h3>Stay Updated</h3>
-            <p>Never miss important news. Get notified when new content drops.</p>
+            <p>
+              Never miss important news. Get notified when new content drops.
+            </p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">✨</div>
@@ -56,12 +60,6 @@ export const LandingPage: React.FC = () => {
           </Button>
         </Link>
       </section>
-
-      <footer className="landing-footer">
-        <Link to="/unsubscribe-email" className="footer-link">Unsubscribe</Link>
-        <span className="footer-divider">|</span>
-        <span className="footer-copy">© {new Date().getFullYear()} Newsletter Hub</span>
-      </footer>
-    </div>
+    </SiteLayout>
   );
 };

@@ -1,0 +1,35 @@
+.site-footer {
+  margin-top: auto;
+  padding: 1.5rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(148, 163, 184, 0.85);
+  font-size: 0.95rem;
+}
+
+.footer-link {
+  color: #93c5fd;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-link:hover {
+  color: #bae6fd;
+}
+
+.footer-divider {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.footer-copy {
+  color: rgba(148, 163, 184, 0.85);
+}
+
+@media (max-width: 640px) {
+  .site-footer {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}

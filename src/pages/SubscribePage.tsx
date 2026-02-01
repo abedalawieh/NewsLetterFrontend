@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { NewsletterForm } from "../components/NewsletterForm/NewsletterForm";
+import { SiteLayout } from "../components/SiteLayout/SiteLayout";
 import "./SubscribePage.css";
 
 export const SubscribePage: React.FC = () => {
   return (
-    <div className="subscribe-page">
+    <SiteLayout className="subscribe-page">
       <header className="subscribe-header">
         <Link to="/" className="back-link">
           ← Back to Home
@@ -21,6 +22,6 @@ export const SubscribePage: React.FC = () => {
           <Link to="/unsubscribe-email">Unsubscribe</Link>
         </div>
       </main>
-    </div>
+    </SiteLayout>
   );
 };

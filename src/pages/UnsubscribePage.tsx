@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input/Input";
+import { SiteLayout } from "../components/SiteLayout/SiteLayout";
 import "./UnsubscribePage.css";
 
 export const UnsubscribePage: React.FC = () => {
@@ -29,7 +30,7 @@ export const UnsubscribePage: React.FC = () => {
   };
 
   return (
-    <div className="unsubscribe-email-page">
+    <SiteLayout className="unsubscribe-email-page">
       <div className="unsubscribe-email-container">
         <Card
           title="Unsubscribe"
@@ -67,7 +68,7 @@ export const UnsubscribePage: React.FC = () => {
           </form>
         </Card>
       </div>
-    </div>
+    </SiteLayout>
   );
 };
 

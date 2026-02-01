@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Card } from '../Card';
 import { Button } from '../Button';
 import { RadioGroup } from '../RadioGroup';
+import { SiteLayout } from '../SiteLayout/SiteLayout';
 import './Unsubscribe.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://localhost:17860/api';
@@ -63,7 +64,7 @@ export const Unsubscribe = () => {
 
     if (submitted) {
         return (
-            <div className="unsubscribe-page">
+            <SiteLayout className="unsubscribe-page">
                 <div className="unsubscribe-container">
                     <Card title="Unsubscribed Successfully">
                         <div className="unsubscribe-success">
@@ -76,12 +77,12 @@ export const Unsubscribe = () => {
                         </div>
                     </Card>
                 </div>
-            </div>
+            </SiteLayout>
         );
     }
 
     return (
-        <div className="unsubscribe-page">
+        <SiteLayout className="unsubscribe-page">
             <div className="unsubscribe-container">
                 <Card title="Unsubscribe">
                     <p className="unsubscribe-intro">
@@ -146,6 +147,6 @@ export const Unsubscribe = () => {
                     </form>
                 </Card>
             </div>
-        </div>
+        </SiteLayout>
     );
 };

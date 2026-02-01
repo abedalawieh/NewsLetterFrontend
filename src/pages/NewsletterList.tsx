@@ -4,6 +4,8 @@ import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import axios from 'axios';
 import metadataService from '../services/metadataService';
+import type { Lookup } from '@/types';
+import { SiteLayout } from "../components/SiteLayout/SiteLayout";
 import './NewsletterList.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://localhost:17860/api';
@@ -13,19 +15,34 @@ interface Newsletter {
   id: string;
   title: string;
   targetInterests: string;
+  targetInterestLabels?: string[];
   isDraft: boolean;
   sentAt: string | null;
   createdAt: string;
+}
+
+interface PagedResult<T> {
+  items?: T[];
+  totalItems?: number;
+  currentPage?: number;
+  pageSize?: number;
+  totalPages?: number;
+  Items?: T[];
+  TotalItems?: number;
+  CurrentPage?: number;
+  PageSize?: number;
+  TotalPages?: number;
 }
 
 type SortOption = 'newest' | 'oldest' | 'title';
 
 export const NewsletterList: React.FC = () => {
   const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
-  const [availableInterests, setAvailableInterests] = useState<string[]>([]);
+  const [interestOptions, setInterestOptions] = useState<Lookup[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
@@ -33,15 +50,20 @@ export const NewsletterList: React.FC = () => {
   const fetchNewsletters = async () => {
     setLoading(true);
     try {
-      const res = await axios.get<Newsletter[]>(`${API_BASE}/newsletters`);
-      const allNewsletters = res.data || [];
-
-      const published = allNewsletters.filter((n: any) => {
-        const isDraftFlag = n.isDraft !== undefined ? n.isDraft : n.IsDraft;
-        return isDraftFlag === false;
+      const res = await axios.get<PagedResult<Newsletter>>(`${API_BASE}/newsletters`, {
+        params: {
+          pageNumber: currentPage,
+          pageSize: ITEMS_PER_PAGE,
+          searchTerm: searchTerm.trim() || undefined,
+          interests: selectedInterests.join(','),
+          sortBy
+        }
       });
-
-      setNewsletters(published);
+      const payload = res.data || {};
+      const items = payload.items ?? payload.Items ?? [];
+      const total = payload.totalItems ?? payload.TotalItems ?? items.length;
+      setNewsletters(items);
+      setTotalItems(total);
     } catch (err: any) {
       console.error('Newsletter Fetch Error:', err);
       setError('Something went wrong. Please try again later.');
@@ -52,7 +74,7 @@ export const NewsletterList: React.FC = () => {
 
   useEffect(() => {
     fetchNewsletters();
-  }, []);
+  }, [currentPage, searchTerm, selectedInterests, sortBy]);
 
   useEffect(() => {
     const fetchInterests = async () => {
@@ -60,9 +82,8 @@ export const NewsletterList: React.FC = () => {
         const items = await metadataService.getLookupsByCategory('Interest');
         const sorted = items
           .filter((i) => i.isActive)
-          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
-          .map((i) => i.value);
-        setAvailableInterests(sorted);
+          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setInterestOptions(sorted);
       } catch (err) {
         console.error('Failed to load interests for filters', err);
       }
@@ -74,47 +95,36 @@ export const NewsletterList: React.FC = () => {
     setCurrentPage(1);
   }, [searchTerm, selectedInterests, sortBy]);
 
-  const filteredNewsletters = useMemo(() => {
-    const normalizedSearch = searchTerm.trim().toLowerCase();
-    const hasSearch = normalizedSearch.length > 0;
-    const hasInterests = selectedInterests.length > 0;
-
-    const filtered = newsletters.filter((n) => {
-      const titleMatch = n.title?.toLowerCase().includes(normalizedSearch);
-      const interests = (n.targetInterests || '')
-        .split(',')
-        .map((i) => i.trim())
-        .filter(Boolean);
-      const interestsMatch = selectedInterests.every((interest) =>
-        interests.some((i) => i.toLowerCase() === interest.toLowerCase())
-      );
-
-      if (hasSearch && !titleMatch && !interests.join(',').toLowerCase().includes(normalizedSearch)) {
-        return false;
-      }
-      if (hasInterests && !interestsMatch) {
-        return false;
-      }
-      return true;
+  const interestLabelMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    interestOptions.forEach((item) => {
+      map[item.value] = item.label;
     });
+    return map;
+  }, [interestOptions]);
 
-    const sorted = filtered.sort((a, b) => {
-      if (sortBy === 'title') {
-        return a.title.localeCompare(b.title);
-      }
-      const dateA = new Date(a.sentAt || a.createdAt || 0).getTime();
-      const dateB = new Date(b.sentAt || b.createdAt || 0).getTime();
-      return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
-    });
+  const formatLabel = (value: string) => {
+    if (!value) return '';
+    return value
+      .replace(/_/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
 
-    return sorted;
-  }, [newsletters, searchTerm, selectedInterests, sortBy]);
+  const getInterestLabels = (newsletter: Newsletter) => {
+    if (newsletter.targetInterestLabels && newsletter.targetInterestLabels.length > 0) {
+      return newsletter.targetInterestLabels;
+    }
+    return (newsletter.targetInterests || '')
+      .split(',')
+      .map((i) => i.trim())
+      .filter(Boolean)
+      .map((value) => interestLabelMap[value] || formatLabel(value));
+  };
 
-  const totalItems = filteredNewsletters.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
   const currentPageSafe = Math.min(currentPage, totalPages);
-  const startIndex = (currentPageSafe - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = filteredNewsletters.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -193,7 +203,7 @@ export const NewsletterList: React.FC = () => {
   };
 
   return (
-    <div className="newsletter-list-page">
+    <SiteLayout className="newsletter-list-page">
       <header className="newsletter-list-header">
         <Link to="/" className="back-link">Back</Link>
         <div className="headline">
@@ -247,22 +257,31 @@ export const NewsletterList: React.FC = () => {
             </div>
           </div>
           <div className="filters-interests">
-            {(availableInterests.length > 0 ? availableInterests : ['Houses', 'Apartments', 'Rental', 'LandSourcing', 'SharedOwnership']).map((interest) => {
-              const isActive = selectedInterests.includes(interest);
+            {(interestOptions.length > 0
+              ? interestOptions
+              : [
+                  { value: 'Houses', label: 'Houses' },
+                  { value: 'Apartments', label: 'Apartments' },
+                  { value: 'Rental', label: 'Rental' },
+                  { value: 'LandSourcing', label: 'Land Sourcing' },
+                  { value: 'SharedOwnership', label: 'Shared Ownership' }
+                ]
+            ).map((interest) => {
+              const isActive = selectedInterests.includes(interest.value);
               return (
                 <button
                   type="button"
-                  key={interest}
+                  key={interest.value}
                   className={`interest-chip ${isActive ? 'active' : ''}`}
                   onClick={() => {
                     setSelectedInterests((prev) =>
-                      prev.includes(interest)
-                        ? prev.filter((item) => item !== interest)
-                        : [...prev, interest]
+                      prev.includes(interest.value)
+                        ? prev.filter((item) => item !== interest.value)
+                        : [...prev, interest.value]
                     );
                   }}
                 >
-                  {interest}
+                  {interest.label}
                 </button>
               );
             })}
@@ -270,7 +289,7 @@ export const NewsletterList: React.FC = () => {
         </section>
         {!loading && totalItems > 0 && (
           <p className="results-info">
-            Showing {paginatedItems.length} of {totalItems} newsletters
+            Showing {newsletters.length} of {totalItems} newsletters
           </p>
         )}
       </header>
@@ -279,32 +298,40 @@ export const NewsletterList: React.FC = () => {
         {loading && <p className="loading-text">Loading newsletters...</p>}
         {error && <p className="error-text">{error}</p>}
 
-        {!loading && !error && paginatedItems.length === 0 && (
+        {!loading && !error && newsletters.length === 0 && (
           <Card title="No newsletters yet">
             <p className="empty-text">No newsletters match those filters yet.</p>
           </Card>
         )}
 
-        {!loading && !error && paginatedItems.length > 0 && (
+        {!loading && !error && newsletters.length > 0 && (
           <>
             <div className="newsletter-grid">
-              {paginatedItems.map((n) => (
+              {newsletters.map((n) => (
                 <article key={n.id} className="newsletter-card">
-                  <Card title={n.title}>
-                    <p className="newsletter-meta">
-                      {n.sentAt
-                        ? `Published ${new Date(n.sentAt).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}`
-                        : 'Coming soon'}
-                    </p>
-                    <p className="newsletter-interests">
-                      {n.targetInterests
-                        ? n.targetInterests.split(',').slice(0, 3).join(', ') + (n.targetInterests.split(',').length > 3 ? '...' : '')
-                        : 'General'}
-                    </p>
+                  <Card
+                    title={n.title || 'Newsletter'}
+                    subtitle={n.sentAt
+                      ? `Published ${new Date(n.sentAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}`
+                      : 'Coming soon'}
+                  >
+                    <div className="newsletter-subject-block">
+                      <span className="subject-label">Subject</span>
+                      <p className="subject-text">{n.title || 'Untitled Newsletter'}</p>
+                    </div>
+                    <div className="newsletter-topics">
+                      {(getInterestLabels(n).length > 0 ? getInterestLabels(n) : ['General'])
+                        .slice(0, 4)
+                        .map((label) => (
+                          <span key={`${n.id}-${label}`} className="topic-badge">
+                            {label}
+                          </span>
+                        ))}
+                    </div>
                     <Link to={`/newsletters/${n.id}`} className="newsletter-link">
                       <Button variant="outline" size="small" fullWidth>
                         Read More
@@ -319,7 +346,7 @@ export const NewsletterList: React.FC = () => {
           </>
         )}
       </main>
-    </div>
+    </SiteLayout>
   );
 };
 

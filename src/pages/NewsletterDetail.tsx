@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import axios from 'axios';
+import { SiteLayout } from "../components/SiteLayout/SiteLayout";
 import './NewsletterDetail.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://localhost:17860/api';
@@ -12,6 +13,7 @@ interface Newsletter {
     title: string;
     content: string;
     targetInterests: string;
+    targetInterestLabels?: string[];
     templateName?: string;
     isDraft: boolean;
     sentAt: string | null;
@@ -47,17 +49,17 @@ export const NewsletterDetail: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="newsletter-detail-page">
+            <SiteLayout className="newsletter-detail-page">
                 <div className="newsletter-detail-container">
                     <p className="loading-text">Loading newsletter details...</p>
                 </div>
-            </div>
+            </SiteLayout>
         );
     }
 
     if (error || !newsletter) {
         return (
-            <div className="newsletter-detail-page">
+            <SiteLayout className="newsletter-detail-page">
                 <div className="newsletter-detail-container">
                     <Card title="Error">
                         <p className="error-text">{error || 'Newsletter not found.'}</p>
@@ -66,14 +68,24 @@ export const NewsletterDetail: React.FC = () => {
                         </Button>
                     </Card>
                 </div>
-            </div>
+            </SiteLayout>
         );
     }
 
-    const interests = newsletter.targetInterests?.split(',').filter(Boolean) || [];
+    const formatLabel = (value: string) =>
+        value
+            .replace(/_/g, ' ')
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+    const interests =
+        newsletter.targetInterestLabels && newsletter.targetInterestLabels.length > 0
+            ? newsletter.targetInterestLabels
+            : newsletter.targetInterests?.split(',').filter(Boolean).map(formatLabel) || [];
 
     return (
-        <div className="newsletter-detail-page">
+        <SiteLayout className="newsletter-detail-page">
             <div className="newsletter-detail-container">
                 <header className="newsletter-detail-header">
                     <Link to="/newsletters" className="back-link">
@@ -130,7 +142,7 @@ export const NewsletterDetail: React.FC = () => {
                     </Link>
                 </footer>
             </div>
-        </div>
+        </SiteLayout>
     );
 };
 
