@@ -16,6 +16,7 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    allowedHosts: ["newsletter-63fh.onrender.com"],
     proxy: {
       "/api": {
         target: "https://localhost:58476",
@@ -24,6 +25,6 @@ export default defineConfig({
     },
   },
   preview: {
-    allowedHosts: ["newsletter-63fh.onrender.com"],
+    allowedHosts: "all",
   },
 });
