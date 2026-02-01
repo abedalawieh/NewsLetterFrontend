@@ -1,0 +1,59 @@
+.subscribe-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  color: #e4e4e7;
+  padding: 2rem;
+}
+
+.subscribe-header {
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.subscribe-header .back-link {
+  display: inline-block;
+  color: #38bdf8;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.subscribe-header .back-link:hover {
+  text-decoration: underline;
+}
+
+.subscribe-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subscribe-header p {
+  color: #a1a1aa;
+}
+
+.subscribe-main {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.subscribe-footer-links {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #a1a1aa;
+}
+
+.subscribe-footer-links a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.subscribe-footer-links a:hover {
+  text-decoration: underline;
+}
+
+.subscribe-footer-links .divider {
+  margin: 0 0.5rem;
+}

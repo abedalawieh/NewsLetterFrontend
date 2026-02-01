@@ -1,0 +1,120 @@
+/* CheckboxGroup Component Styles */
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.checkbox-group__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.checkbox-group__required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.checkbox-group__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+}
+
+.checkbox-option:hover {
+  border-color: #667eea;
+  background: #f9fafb;
+}
+
+.checkbox-option--checked {
+  border-color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.checkbox-option__input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-option__checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.375rem;
+  background: #ffffff;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+}
+
+.checkbox-option:hover .checkbox-option__checkmark {
+  border-color: #667eea;
+}
+
+.checkbox-option--checked .checkbox-option__checkmark {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+}
+
+.checkbox-option__icon {
+  width: 1rem;
+  height: 1rem;
+  color: white;
+}
+
+.checkbox-option__label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #374151;
+  flex: 1;
+}
+
+.checkbox-option--checked .checkbox-option__label {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.checkbox-group__error {
+  font-size: 0.875rem;
+  color: #ef4444;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.checkbox-group__error::before {
+  content: '⚠';
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .checkbox-group__options {
+    grid-template-columns: 1fr;
+  }
+}

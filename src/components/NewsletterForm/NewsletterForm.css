@@ -1,0 +1,72 @@
+/* Newsletter Form Styles - Modern and Beautiful */
+
+/* Fix contrast: option labels must be dark on white boxes (Card forces light text on descendants) */
+.newsletter-form .radio-option__label,
+.newsletter-form .checkbox-option__label {
+  color: #1e293b !important;
+}
+
+.newsletter-form .radio-option--selected .radio-option__label,
+.newsletter-form .checkbox-option--checked .checkbox-option__label {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+
+/* Section labels: ensure readable on dark card */
+.newsletter-form .radio-group-label,
+.newsletter-form .checkbox-group__label {
+  color: #e2e8f0 !important;
+}
+
+.newsletter-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-actions {
+  margin-top: 1rem;
+}
+
+.newsletter-form-footer__text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-form-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .newsletter-form-card {
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .newsletter-form-title {
+    font-size: 1.5rem;
+  }
+}

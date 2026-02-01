@@ -1,0 +1,116 @@
+/* Card Styles - Dark Theme */
+.card {
+    width: 100%;
+    background: var(--gradient-card, linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%));
+    border: 1px solid var(--border-default, rgba(148, 163, 184, 0.15));
+    border-radius: var(--radius-2xl, 1.5rem);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.3));
+    padding: 2.5rem;
+    animation: slideUp 0.4s ease-out;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card__header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card__title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--gradient-primary, linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.card__subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary, #94a3b8);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.card__body {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary, #f1f5f9);
+}
+
+/* Ensure all text inside card body is properly colored */
+.card__body p,
+.card__body span,
+.card__body label,
+.card__body div {
+    color: var(--text-primary, #f1f5f9);
+}
+
+.card__body .text-muted,
+.card__body .helper-text {
+    color: var(--text-secondary, #94a3b8) !important;
+}
+
+.card__footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-default, rgba(148, 163, 184, 0.15));
+}
+
+.card__footer p {
+    color: var(--text-secondary, #94a3b8);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Card variations */
+.card--elevated {
+    box-shadow: var(--shadow-glow, 0 0 20px rgba(14, 165, 233, 0.3));
+    border-color: rgba(14, 165, 233, 0.25);
+}
+
+.card--compact {
+    padding: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        padding: 2rem 1.5rem;
+        border-radius: var(--radius-xl, 1rem);
+    }
+
+    .card__title {
+        font-size: 1.75rem;
+    }
+
+    .card__subtitle {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 1.5rem 1rem;
+        border-radius: var(--radius-lg, 0.75rem);
+    }
+
+    .card__title {
+        font-size: 1.5rem;
+    }
+}
