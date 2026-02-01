@@ -17,6 +17,7 @@ export const NewsletterForm: React.FC = () => {
     isSubmitting,
     submitSuccess,
     submitError,
+    submitMessage,
     updateField,
     handleSubmit,
     resetForm,
@@ -50,7 +51,7 @@ export const NewsletterForm: React.FC = () => {
           <Alert
             type="success"
             title="Success!"
-            message="You've been successfully subscribed to our newsletter."
+            message={submitMessage || "You've been successfully subscribed to our newsletter."}
             onClose={resetForm}
           />
         )}

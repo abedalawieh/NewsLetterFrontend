@@ -43,6 +43,11 @@ export interface SubscriberResponse {
   isActive: boolean;
 }
 
+export interface ReactivationResponse {
+  message: string;
+  status: "reactivated";
+}
+
 export interface ApiError {
   message: string;
   statusCode?: number;

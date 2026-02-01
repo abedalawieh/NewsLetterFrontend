@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { NewsletterFormData, ApiError } from '@/types';
+import type { NewsletterFormData, ApiError, ReactivationResponse, SubscriberResponse } from '@/types';
 import { subscriberService } from '@services/subscriberService';
 
 
@@ -17,6 +17,7 @@ export const useNewsletterForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   
   const updateField = <K extends keyof NewsletterFormData>(
@@ -72,6 +73,7 @@ export const useNewsletterForm = () => {
   const handleSubmit = async () => {
     setSubmitError(null);
     setSubmitSuccess(false);
+    setSubmitMessage(null);
 
     if (!validateForm()) {
       return;
@@ -80,8 +82,13 @@ export const useNewsletterForm = () => {
     setIsSubmitting(true);
 
     try {
-      await subscriberService.createSubscriber(formData);
+      const response = await subscriberService.createSubscriber(formData);
       setSubmitSuccess(true);
+      if (isReactivationResponse(response)) {
+        setSubmitMessage(response.message);
+      } else {
+        setSubmitMessage("You've been successfully subscribed to our newsletter.");
+      }
 
       setFormData({
         firstName: '',
@@ -122,6 +129,7 @@ export const useNewsletterForm = () => {
     setErrors({});
     setSubmitSuccess(false);
     setSubmitError(null);
+    setSubmitMessage(null);
   };
 
   return {
@@ -130,8 +138,15 @@ export const useNewsletterForm = () => {
     isSubmitting,
     submitSuccess,
     submitError,
+    submitMessage,
     updateField,
     handleSubmit,
     resetForm,
   };
+};
+
+const isReactivationResponse = (
+  response: SubscriberResponse | ReactivationResponse
+): response is ReactivationResponse => {
+  return (response as ReactivationResponse).status === "reactivated";
 };
