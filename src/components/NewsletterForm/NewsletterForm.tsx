@@ -9,11 +9,7 @@ import { useNewsletterForm } from '@hooks/useNewsletterForm';
 import { useMetadata } from '@hooks/useMetadata';
 import './NewsletterForm.css';
 
-/**
- * Newsletter Signup Form Component
- * Main form component using composition pattern
- * Clean separation of concerns with custom hooks
- */
+
 export const NewsletterForm: React.FC = () => {
   const {
     formData,
@@ -37,8 +33,6 @@ export const NewsletterForm: React.FC = () => {
     await handleSubmit();
   };
 
-  // Removed blocking loading state to allow form to render immediately
-  // Options will populate once metadata is fetched
 
   return (
     <div className="newsletter-form-container">

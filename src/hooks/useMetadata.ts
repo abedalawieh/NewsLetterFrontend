@@ -24,15 +24,12 @@ export const useMetadata = () => {
         const load = async () => {
             setIsLoading(true);
             try {
-                // If API fails (e.g. backend down), we catch it and set loading to false
-                // so the form can still render (albeit with empty options)
                 const data = await metadataService.getAllLookups();
                 setLookups(data);
                 setError(null);
             } catch (err: any) {
                 console.error("Failed to load metadata:", err);
                 setError(err.message || 'Failed to fetch metadata');
-                // Optional: set default fallbacks here if critical
             } finally {
                 setIsLoading(false);
             }

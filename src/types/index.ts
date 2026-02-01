@@ -1,7 +1,4 @@
-/**
- * Type definitions for the Newsletter application
- * Following TypeScript best practices with strict typing
- */
+
 
 export enum SubscriberType {
   HomeBuilder = 'HomeBuilder',
@@ -52,7 +49,6 @@ export interface ApiError {
   errors?: Record<string, string[]>;
 }
 
-// Form state type
 export interface NewsletterFormData {
   firstName: string;
   lastName: string;
@@ -62,7 +58,6 @@ export interface NewsletterFormData {
   interests: string[];
 }
 
-// Button component props
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger' | 'outline';
   size?: 'small' | 'medium' | 'large';
@@ -71,14 +66,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children: React.ReactNode;
 }
 
-// Input component props
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
 }
 
-// Checkbox group props
 export interface CheckboxGroupProps {
   label: string;
   options: { value: string; label: string }[];
@@ -88,7 +81,6 @@ export interface CheckboxGroupProps {
   required?: boolean;
 }
 
-// Alert component props
 export interface AlertProps {
   type: 'success' | 'error' | 'warning' | 'info';
   title?: string;
@@ -96,7 +88,6 @@ export interface AlertProps {
   onClose?: () => void;
 }
 
-// Radio group props
 export interface RadioGroupOption {
   value: string;
   label: string;
@@ -113,7 +104,6 @@ export interface RadioGroupProps {
   disabled?: boolean;
 }
 
-// Card component props
 export interface CardProps {
   children: React.ReactNode;
   title?: string;
@@ -122,7 +112,6 @@ export interface CardProps {
   footer?: React.ReactNode;
 }
 
-// Lookup types
 export interface Lookup {
   id: string;
   category: string;
@@ -132,14 +121,6 @@ export interface Lookup {
   isActive: boolean;
 }
 
-export interface CreateLookupDto {
-  category: string;
-  value: string;
-  label: string;
-  sortOrder: number;
-}
-
-// Auth types
 export interface User {
   email: string;
   firstName: string;
@@ -154,5 +135,4 @@ export interface AuthResponse {
   lastName: string;
   role: 'Admin' | 'User';
 }
-
 

@@ -3,7 +3,6 @@ import type { Lookup } from "@/types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://localhost:17860/api";
 
-// Public metadata endpoints (no auth required for signup form)
 const publicClient = axios.create({ baseURL: API_BASE, timeout: 10000 });
 
 export const metadataService = {

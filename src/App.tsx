@@ -12,12 +12,12 @@ function App() {
       </header>
 
       <main style={{ width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-        {/* User Panel - Always visible */}
+        {}
         <section className="panel section-fade-in">
           <NewsletterForm />
         </section>
 
-        {/* Admin login removed as per request */}
+        {}
 
       </main>
     </div>

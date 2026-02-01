@@ -2,10 +2,7 @@ import React from 'react';
 import { CardProps } from '@/types';
 import './Card.css';
 
-/**
- * Reusable Card Component
- * Provides a consistent container for sections and forms
- */
+
 export const Card: React.FC<CardProps> = ({
     children,
     title,

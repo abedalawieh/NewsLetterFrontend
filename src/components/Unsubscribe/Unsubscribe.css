@@ -110,7 +110,7 @@
   text-decoration: none;
 }
 
-/* Dark-theme overrides for RadioGroup on unsubscribe page - better contrast */
+
 .unsubscribe-form .radio-group-label {
   color: #e2e8f0;
 }

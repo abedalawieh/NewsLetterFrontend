@@ -2,11 +2,7 @@ import React from 'react';
 import { RadioGroupProps } from '@/types';
 import './RadioGroup.css';
 
-/**
- * Reusable RadioGroup Component
- * For selecting a single option from a list
- * Fully accessible with proper ARIA attributes and keyboard support
- */
+
 export const RadioGroup: React.FC<RadioGroupProps> = ({
     label,
     name,

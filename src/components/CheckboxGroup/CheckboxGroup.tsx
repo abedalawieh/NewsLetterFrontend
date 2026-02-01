@@ -2,11 +2,7 @@ import React from 'react';
 import type { CheckboxGroupProps } from '@/types';
 import './CheckboxGroup.css';
 
-/**
- * Reusable CheckboxGroup Component
- * For selecting multiple options from a list
- * Fully accessible with proper ARIA attributes
- */
+
 export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   label,
   options,

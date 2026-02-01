@@ -1,4 +1,4 @@
-/* Button Component Styles - Modern, Accessible, and Beautiful */
+
 
 .btn {
   display: inline-flex;
@@ -33,7 +33,7 @@
   pointer-events: none;
 }
 
-/* Sizes */
+
 .btn--small {
   padding: 0.4rem 0.8rem;
   font-size: 0.8125rem;
@@ -49,7 +49,7 @@
   font-size: 1.0625rem;
 }
 
-/* Variants */
+
 .btn--primary {
   background: #6366f1;
   color: #ffffff;
@@ -108,12 +108,12 @@
   transform: translateY(-1.5px);
 }
 
-/* Full width */
+
 .btn--full-width {
   width: 100%;
 }
 
-/* Loading state */
+
 .btn--loading {
   position: relative;
   color: transparent;
@@ -172,7 +172,7 @@
   }
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 640px) {
   .btn--large {
     padding: 0.875rem 1.75rem;

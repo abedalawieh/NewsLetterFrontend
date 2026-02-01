@@ -2,10 +2,7 @@ import React from 'react';
 import { AlertProps } from '@/types';
 import './Alert.css';
 
-/**
- * Reusable Alert Component
- * Supports different types: success, error, warning, info
- */
+
 export const Alert: React.FC<AlertProps> = ({
     type,
     title,

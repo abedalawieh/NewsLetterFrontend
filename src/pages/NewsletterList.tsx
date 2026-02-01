@@ -36,7 +36,6 @@ export const NewsletterList: React.FC = () => {
       const res = await axios.get<Newsletter[]>(`${API_BASE}/newsletters`);
       const allNewsletters = res.data || [];
 
-      // Filter out drafts if we only want published ones, but be flexible with property casing
       const published = allNewsletters.filter((n: any) => {
         const isDraftFlag = n.isDraft !== undefined ? n.isDraft : n.IsDraft;
         return isDraftFlag === false;

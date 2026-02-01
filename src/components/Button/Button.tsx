@@ -2,16 +2,7 @@ import React from 'react';
 import type { ButtonProps } from '@/types';
 import './Button.css';
 
-/**
- * Reusable Button Component
- * Following Single Responsibility Principle and React best practices
- * Fully typed with TypeScript for type safety
- * 
- * @example
- * <Button variant="primary" size="medium" onClick={handleClick}>
- *   Submit
- * </Button>
- */
+
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'medium',
@@ -68,5 +59,4 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-// Named export for flexibility
 export default Button;

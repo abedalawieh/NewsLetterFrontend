@@ -2,11 +2,7 @@ import React from 'react';
 import type { InputProps } from '@/types';
 import './Input.css';
 
-/**
- * Reusable Input Component
- * Fully accessible with proper ARIA attributes
- * Supports validation states and helper text
- */
+
 export const Input: React.FC<InputProps> = ({
   label,
   error,

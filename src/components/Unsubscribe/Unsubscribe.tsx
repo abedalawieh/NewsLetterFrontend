@@ -19,7 +19,6 @@ export const Unsubscribe = () => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Redirect if no email is present
     useEffect(() => {
         if (!email) {
             navigate('/');
