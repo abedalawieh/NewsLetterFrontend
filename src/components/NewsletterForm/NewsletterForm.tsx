@@ -38,7 +38,7 @@ export const NewsletterForm: React.FC = () => {
   return (
     <div className="newsletter-form-container">
       <Card
-        title="📬 Newsletter Signup"
+        title="Newsletter Signup"
         subtitle="Stay updated with the latest property listings and news"
         footer={(
           <p className="newsletter-form-footer__text">
@@ -66,28 +66,34 @@ export const NewsletterForm: React.FC = () => {
         )}
 
         <form onSubmit={onSubmit} className="newsletter-form" noValidate>
-          <div className="form-row">
-            <Input
-              label="First Name"
-              type="text"
-              placeholder="John"
-              value={formData.firstName}
-              onChange={(e) => updateField('firstName', e.target.value)}
-              error={errors.firstName}
-              required
-              disabled={isSubmitting}
-            />
+          <div className="form-row form-row--names">
+            <div className="name-field name-field--first">
+              <Input
+                className="name-input"
+                label="First Name"
+                type="text"
+                placeholder="John"
+                value={formData.firstName}
+                onChange={(e) => updateField('firstName', e.target.value)}
+                error={errors.firstName}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
 
-            <Input
-              label="Last Name"
-              type="text"
-              placeholder="Doe"
-              value={formData.lastName}
-              onChange={(e) => updateField('lastName', e.target.value)}
-              error={errors.lastName}
-              required
-              disabled={isSubmitting}
-            />
+            <div className="name-field name-field--last">
+              <Input
+                className="name-input"
+                label="Last Name"
+                type="text"
+                placeholder="Doe"
+                value={formData.lastName}
+                onChange={(e) => updateField('lastName', e.target.value)}
+                error={errors.lastName}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
           </div>
 
           <Input
