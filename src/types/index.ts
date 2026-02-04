@@ -1,25 +1,3 @@
-
-
-export enum SubscriberType {
-  HomeBuilder = 'HomeBuilder',
-  HomeBuyer = 'HomeBuyer',
-}
-
-export enum CommunicationMethod {
-  Email = 'Email',
-  SMS = 'SMS',
-  Phone = 'Phone',
-  Post = 'Post',
-}
-
-export enum Interest {
-  Houses = 'Houses',
-  Apartments = 'Apartments',
-  SharedOwnership = 'SharedOwnership',
-  Rental = 'Rental',
-  LandSourcing = 'LandSourcing',
-}
-
 export interface CreateSubscriberDto {
   firstName: string;
   lastName: string;
@@ -28,7 +6,6 @@ export interface CreateSubscriberDto {
   communicationMethods: string[];
   interests: string[];
 }
-
 
 export interface SubscriberResponse {
   id: string;
@@ -64,8 +41,8 @@ export interface NewsletterFormData {
 }
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger' | 'outline';
-  size?: 'small' | 'medium' | 'large';
+  variant?: "primary" | "secondary" | "danger" | "outline";
+  size?: "small" | "medium" | "large";
   isLoading?: boolean;
   fullWidth?: boolean;
   children: React.ReactNode;
@@ -87,7 +64,7 @@ export interface CheckboxGroupProps {
 }
 
 export interface AlertProps {
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: "success" | "error" | "warning" | "info";
   title?: string;
   message: string;
   onClose?: () => void;
@@ -125,19 +102,3 @@ export interface Lookup {
   sortOrder: number;
   isActive: boolean;
 }
-
-export interface User {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: 'Admin' | 'User';
-}
-
-export interface AuthResponse {
-  token: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: 'Admin' | 'User';
-}
-
